@@ -224,7 +224,11 @@ svg.icon{ display:block; }
 .gift-note{ font-size:13.5px; color:var(--navy-mid); font-style:italic;}
 
 /* ---- Scene 11: rsvp ---- */
-.rsvp-text{ color:#fff; max-width:270px; margin-bottom:22px; font-size:16px;}
+.rsvp-text{ color:#fff; max-width:270px; margin-bottom:14px; font-size:16px;}
+.rsvp-wrap{ width:100%; max-width:340px; max-height:100%; overflow-y:auto; display:flex; flex-direction:column; align-items:center; -webkit-overflow-scrolling:touch;}
+.form-embed-wrap{ width:100%; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 10px 26px rgba(0,0,0,0.32); margin-bottom:10px;}
+.form-embed{ width:100%; height:360px; border:0; display:block; background:#fff;}
+.form-fallback-btn{ width:100%; justify-content:center; margin-bottom:4px;}
 
 /* ---- Scene 12: final ---- */
 .final-planet-wrap{ position:relative; width:220px; height:220px; margin-bottom:6px;}
@@ -555,10 +559,15 @@ svg.icon{ display:block; }
 
       <!-- CENA 11 — RSVP -->
       <section class="scene" data-scene="11">
-        <svg class="icon" style="width:70px; margin-bottom:14px;" viewBox="0 0 40 40"><use href="#icon-star"/></svg>
-        <p class="rsvp-text">Sua presença é muito importante para nossa tripulação.</p>
-        <a class="btn btn-primary no-advance" href="https://forms.gle/cb7H25zZC5Kjuq887" target="_blank" rel="noopener">✅ Confirmar Presença</a>
-        <p class="tap-hint">toque na tela para seguir viagem<span class="arrow">›</span></p>
+        <div class="rsvp-wrap">
+          <svg class="icon" style="width:56px; margin-bottom:10px;" viewBox="0 0 40 40"><use href="#icon-star"/></svg>
+          <p class="rsvp-text">Sua presença é muito importante para nossa tripulação.</p>
+          <div class="form-embed-wrap no-advance">
+            <iframe class="form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSdLxhlm-aGnzhdpxis4Qln7rwWucdeqBO6CKOXXPcs4f8JfXg/viewform?embedded=true" title="Formulário de confirmação de presença">Carregando formulário…</iframe>
+          </div>
+          <a class="btn btn-outline no-advance form-fallback-btn" style="background:var(--navy-deep);" href="https://forms.gle/cb7H25zZC5Kjuq887" target="_blank" rel="noopener">↗ Abrir em tela cheia</a>
+          <p class="tap-hint" style="position:static; margin-top:12px;">toque na tela para seguir viagem<span class="arrow">›</span></p>
+        </div>
       </section>
 
       <!-- CENA 12 — FINAL -->
