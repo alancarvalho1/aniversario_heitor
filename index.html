@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1638">
+<title>Heitor faz 1 aninho 🚀 — Missão Especial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-deep:#0a1638;
+  --navy-mid:#122a5e;
+  --navy-light:#1e3a72;
+  --baby-blue:#bfe3ff;
+  --baby-blue-soft:#eaf6ff;
+  --gold:#e8c874;
+  --gold-deep:#c99a3d;
+  --gold-pale:#f5e6bd;
+  --cream:#fdf8ec;
+  --white:#ffffff;
+  --ink:#12224a;
+  --font-display:'Baloo 2', system-ui, sans-serif;
+  --font-body:'Quicksand', system-ui, sans-serif;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; height:100%; background:var(--navy-deep); overflow:hidden;}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  width:100%;
+  height:100%;
+  position:fixed;
+  inset:0;
+}
+#stage-wrap{
+  position:absolute; inset:0;
+  display:flex; justify-content:center; align-items:stretch;
+  background:var(--navy-deep);
+}
+#phone{
+  position:relative;
+  width:100%;
+  max-width:480px;
+  height:100%;
+  overflow:hidden;
+  background:linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-mid) 55%, var(--navy-light) 100%);
+  box-shadow:0 0 60px rgba(0,0,0,0.6);
+}
+@media (min-width:520px){
+  #phone{ margin:16px 0; height:calc(100% - 32px); border-radius:34px; box-shadow:0 20px 60px rgba(0,0,0,0.55), 0 0 0 8px #04091c; }
+}
+
+/* ---------- Starfield ---------- */
+#starfield{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;}
+.bg-star{ position:absolute; background:#fff; border-radius:50%; opacity:0.85; animation:twinkle 3s ease-in-out infinite;}
+.bg-star.big{ box-shadow:0 0 6px 1px rgba(255,255,255,0.8);}
+@keyframes twinkle{ 0%,100%{opacity:0.25; transform:scale(0.8);} 50%{opacity:1; transform:scale(1.15);} }
+.drift-layer{ position:absolute; inset:0; pointer-events:none;}
+.drift-cloud{ position:absolute; opacity:0.9; filter:drop-shadow(0 6px 10px rgba(0,0,0,0.15)); animation:driftX 40s linear infinite;}
+@keyframes driftX{ from{transform:translateX(-10%);} to{transform:translateX(10%);} }
+
+/* ---------- Top chrome: nav dots + music toggle ---------- */
+#top-chrome{
+  position:absolute; top:0; left:0; right:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 8px;
+  pointer-events:none;
+}
+#nav-dots{ display:flex; gap:5px; pointer-events:none; flex-wrap:wrap; max-width:70%;}
+#nav-dots .dot{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.25); transition:all .3s;}
+#nav-dots .dot.done{ background:var(--gold);}
+#nav-dots .dot.active{ background:#fff; box-shadow:0 0 8px 2px var(--gold); transform:scale(1.4);}
+#music-toggle{
+  pointer-events:auto;
+  width:38px; height:38px; border-radius:50%;
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3);
+  color:#fff; font-size:16px; display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(4px);
+}
+
+/* ---------- Scenes ---------- */
+#app{ position:relative; z-index:1; width:100%; height:100%;}
+.scene{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:70px 26px 40px;
+  opacity:0; transform:scale(0.96) translateY(10px);
+  pointer-events:none;
+  transition:opacity 0.7s ease, transform 0.8s ease;
+}
+.scene.active{ opacity:1; transform:scale(1) translateY(0); pointer-events:auto;}
+.eyebrow{ font-family:var(--font-display); color:var(--gold); letter-spacing:1px; font-size:13px; text-transform:uppercase; margin-bottom:10px;}
+.scene h1,.scene h2{ font-family:var(--font-display); margin:0 0 10px; line-height:1.15;}
+.scene p{ font-family:var(--font-body); line-height:1.55; margin:0 0 6px;}
+.tap-hint{ position:absolute; bottom:22px; left:0; right:0; text-align:center; color:rgba(255,255,255,0.65); font-size:12px; letter-spacing:0.5px;}
+.tap-hint .arrow{ display:inline-block; margin-left:4px; animation:bob 1.4s ease-in-out infinite;}
+@keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);} }
+
+.btn{
+  font-family:var(--font-display); font-weight:600; font-size:15px;
+  border:none; border-radius:999px; padding:14px 26px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 8px 18px rgba(0,0,0,0.25);
+  transition:transform 0.15s ease;
+}
+.btn:active{ transform:scale(0.96);}
+.btn-primary{ background:linear-gradient(180deg, var(--gold-pale), var(--gold-deep)); color:var(--navy-deep);}
+.btn-outline{ background:rgba(255,255,255,0.08); color:#fff; border:1.5px solid var(--gold); }
+
+svg.icon{ display:block; }
+
+/* ---- Scene 1: Envelope ---- */
+.scene1-title{ color:#fff; font-size:15px; max-width:260px; margin-bottom:26px;}
+#envelope{ position:relative; width:220px; height:150px; margin-bottom:28px; cursor:pointer;}
+#envelope .env-back{ position:absolute; inset:0; background:linear-gradient(180deg, var(--baby-blue-soft), var(--baby-blue)); border-radius:10px; box-shadow:0 12px 30px rgba(0,0,0,0.35);}
+#envelope .env-flap{ position:absolute; top:0; left:0; width:0; height:0; border-left:110px solid transparent; border-right:110px solid transparent; border-top:78px solid var(--gold); transform-origin:top center; transition:transform 0.8s cubic-bezier(.4,1.4,.6,1); z-index:3;}
+#envelope .env-seal{ position:absolute; top:60px; left:50%; transform:translateX(-50%); width:46px; height:46px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #f2c9c9, var(--gold-deep)); display:flex; align-items:center; justify-content:center; color:#fff; font-family:var(--font-display); font-weight:700; box-shadow:0 4px 8px rgba(0,0,0,0.3); z-index:4;}
+#envelope .env-letter{ position:absolute; left:14px; right:14px; top:14px; bottom:0; background:var(--cream); border-radius:6px 6px 0 0; transform:translateY(0); transition:transform 0.7s ease 0.25s; z-index:2;}
+#envelope.open .env-flap{ transform:rotateX(180deg);}
+#envelope.open .env-letter{ transform:translateY(-70px);}
+#envelope.open .env-seal{ opacity:0; transition:opacity 0.2s;}
+.stars-orbit{ position:absolute; inset:-40px; pointer-events:none;}
+
+/* ---- Scene 2: Letter ---- */
+.letter-card{ background:var(--cream); border-radius:26px; padding:34px 26px 30px; max-width:320px; box-shadow:0 20px 40px rgba(0,0,0,0.35); position:relative;}
+.letter-card::before{ content:""; position:absolute; top:-16px; left:50%; transform:translateX(-50%); width:70px; height:32px; background:var(--gold); border-radius:0 0 40px 40px; opacity:0.9;}
+.letter-card h2{ color:var(--navy-mid); font-size:22px;}
+.letter-card p{ color:var(--navy-mid); font-size:15.5px;}
+.letter-signoff{ margin-top:14px; font-family:var(--font-display); color:var(--gold-deep); font-size:15px;}
+
+/* ---- Scene 3: Countdown launch ---- */
+.launch-panel{ color:#fff;}
+.launch-panel .eyebrow{ margin-bottom:2px;}
+#launch-number{ font-family:var(--font-display); font-size:88px; color:var(--gold); text-shadow:0 0 30px rgba(232,200,116,0.6); margin:14px 0 30px;}
+#launch-number.pop{ animation:pop 0.5s ease;}
+@keyframes pop{ 0%{transform:scale(0.5); opacity:0;} 60%{transform:scale(1.15);} 100%{transform:scale(1); opacity:1;} }
+.mini-rocket-wrap{ position:relative; width:90px; height:150px;}
+.mini-rocket-wrap svg{ width:90px; height:150px;}
+.smoke{ position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:14px; height:14px; background:rgba(255,255,255,0.6); border-radius:50%; opacity:0; }
+.scene[data-scene="3"].ignite .smoke{ animation:smokepuff 1.4s ease-out forwards;}
+.scene[data-scene="3"].ignite .smoke:nth-child(2){ animation-delay:0.12s;}
+.scene[data-scene="3"].ignite .smoke:nth-child(3){ animation-delay:0.24s;}
+@keyframes smokepuff{ 0%{opacity:0.8; transform:translate(-50%,0) scale(0.6);} 100%{opacity:0; transform:translate(-70%,60px) scale(2.4);} }
+
+/* ---- Scene 4: Liftoff ---- */
+.liftoff-sky{ position:absolute; inset:0; overflow:hidden;}
+.liftoff-rocket{ width:100px; position:relative; z-index:2; animation:liftoffMove 3.6s ease-in forwards;}
+@keyframes liftoffMove{ 0%{transform:translateY(160px);} 100%{transform:translateY(-260px);} }
+.liftoff-clouds{ position:absolute; bottom:0; left:0; right:0; height:40%; z-index:1;}
+.liftoff-clouds .drift-cloud{ bottom:0;}
+.liftoff-text{ position:absolute; bottom:70px; color:#fff; font-family:var(--font-display); font-size:14px; letter-spacing:0.5px; opacity:0.85;}
+
+/* ---- Scene 5: journey ---- */
+.journey-field{ position:absolute; inset:0; overflow:hidden;}
+.journey-item{ position:absolute; animation:floaty 6s ease-in-out infinite;}
+@keyframes floaty{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+.journey-rocket{ position:absolute; width:60px; animation:journeyfly 8s linear infinite;}
+@keyframes journeyfly{ 0%{transform:translate(-20%,40%) rotate(-8deg);} 50%{transform:translate(10%,-10%) rotate(2deg);} 100%{transform:translate(-20%,40%) rotate(-8deg);} }
+.journey-text{ position:relative; z-index:3; color:#fff; max-width:280px; font-size:16px; line-height:1.6; text-shadow:0 2px 10px rgba(0,0,0,0.5);}
+
+/* ---- Scene 6: aninho ---- */
+.confetti-layer{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:2;}
+.confetti-piece{ position:absolute; top:-10px; width:8px; height:12px; border-radius:2px; animation:confettifall 3s ease-in forwards;}
+@keyframes confettifall{ 0%{opacity:1; transform:translateY(0) rotate(0deg);} 100%{opacity:0; transform:translateY(520px) rotate(420deg);} }
+.balloon-row{ position:absolute; inset:0; overflow:hidden; pointer-events:none;}
+.balloon{ position:absolute; bottom:-120px; width:44px; animation:balloonrise 9s ease-in infinite;}
+@keyframes balloonrise{ 0%{transform:translateY(0);} 100%{transform:translateY(-720px);} }
+.aninho-text{ position:relative; z-index:3; color:#fff; max-width:270px; font-size:18px; font-family:var(--font-display);}
+
+/* ---- Scene 7: destino ---- */
+.destino-planet{ width:180px; margin-bottom:18px; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.4));}
+.destino-sign{ background:var(--cream); border-radius:16px; padding:14px 22px; box-shadow:0 10px 24px rgba(0,0,0,0.35); transform:rotate(-2deg);}
+.destino-sign p{ color:var(--gold-deep); font-family:var(--font-display); font-size:12px; letter-spacing:1px; margin:0 0 4px;}
+.destino-sign h2{ color:var(--navy-mid); font-size:20px; margin:0;}
+
+/* ---- Cloud card (used in scenes 8, 10) ---- */
+.cloud-card-wrap{ position:absolute; bottom:0; left:0; right:0; z-index:3;}
+.cloud-divider{ display:block; width:100%; height:44px;}
+.cloud-card{ background:var(--cream); padding:22px 24px calc(env(safe-area-inset-bottom,0px) + 26px); }
+.cloud-card h2{ color:var(--navy-mid); font-size:20px; margin-bottom:6px;}
+.cloud-card .sub{ color:var(--gold-deep); font-family:var(--font-display); font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.top-copy{ position:relative; z-index:2; color:#fff; margin-top:-30px; margin-bottom:14px;}
+.top-copy h1{ font-size:26px;}
+
+/* ---- Scene 8: info ---- */
+.info-grid{ display:flex; justify-content:space-between; gap:10px; margin:14px 0 18px;}
+.info-item{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;}
+.info-item svg{ width:34px; height:34px;}
+.info-item span{ font-size:12.5px; color:var(--navy-mid); font-weight:600; line-height:1.3;}
+
+/* ---- Scene 9: countdown dias ---- */
+.days-count{ font-family:var(--font-display); font-size:70px; color:var(--gold); text-shadow:0 0 24px rgba(232,200,116,0.5); line-height:1;}
+.days-label{ color:#fff; font-size:14px; margin-top:6px;}
+.days-sub{ color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:16px;}
+.hours-chip{ display:inline-block; background:rgba(255,255,255,0.1); border:1px solid var(--gold); color:#fff; padding:6px 14px; border-radius:999px; font-size:12.5px; margin-top:10px;}
+
+/* ---- Scene 10: presentes ---- */
+.gift-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:6px 0 16px;}
+.gift-item{ display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(255,255,255,0.5); border-radius:14px; padding:12px 6px;}
+.gift-item svg{ width:32px; height:32px;}
+.gift-item span{ font-size:12px; color:var(--navy-mid); font-weight:600;}
+.gift-note{ font-size:13.5px; color:var(--navy-mid); font-style:italic;}
+
+/* ---- Scene 11: rsvp ---- */
+.rsvp-text{ color:#fff; max-width:270px; margin-bottom:22px; font-size:16px;}
+
+/* ---- Scene 12: final ---- */
+.final-planet-wrap{ position:relative; width:220px; height:220px; margin-bottom:6px;}
+.final-flag{ position:absolute; bottom:64px; left:50%; transform:translate(-50%, 40px); opacity:0; width:56px; transition:transform 1.4s cubic-bezier(.3,1.4,.5,1), opacity 0.6s ease;}
+.scene[data-scene="12"].raised .final-flag{ transform:translate(-50%, -34px); opacity:1;}
+.final-flag text{ font-family:'Baloo 2'; font-weight:700; }
+.mission-title{ color:var(--gold); font-family:var(--font-display); font-size:22px; margin-top:8px; text-shadow:0 0 20px rgba(232,200,116,0.5);}
+.final-msg{ color:#fff; font-size:15.5px; max-width:260px; margin-top:8px;}
+.final-signoff{ margin-top:10px; font-family:var(--font-display); color:var(--baby-blue); font-size:15px;}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001s !important; animation-iteration-count:1 !important; transition-duration:0.2s !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- Hidden defs library: reusable watercolor-ish icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <linearGradient id="gradRocketBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#dfe9f7"/>
+  </linearGradient>
+  <linearGradient id="gradNoseCone" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#f6c6c0"/><stop offset="100%" stop-color="#e8877a"/>
+  </linearGradient>
+  <radialGradient id="gradWindow" cx="35%" cy="35%" r="70%">
+    <stop offset="0%" stop-color="#eaf6ff"/><stop offset="100%" stop-color="#8bb9e8"/>
+  </radialGradient>
+  <linearGradient id="gradFinGold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f0d28a"/><stop offset="100%" stop-color="#c99a3d"/>
+  </linearGradient>
+  <linearGradient id="gradFlame" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#ffe08a"/><stop offset="100%" stop-color="#ff8a4c"/>
+  </linearGradient>
+  <radialGradient id="gradMoon" cx="35%" cy="35%" r="70%">
+    <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#d8dee8"/>
+  </radialGradient>
+  <radialGradient id="gradPlanetBlue" cx="35%" cy="30%" r="75%">
+    <stop offset="0%" stop-color="#8fd0ff"/><stop offset="100%" stop-color="#2f6fb0"/>
+  </radialGradient>
+  <radialGradient id="gradPlanetOrange" cx="35%" cy="30%" r="75%">
+    <stop offset="0%" stop-color="#f5a878"/><stop offset="100%" stop-color="#c85a3a"/>
+  </radialGradient>
+  <radialGradient id="gradSaturnBody" cx="35%" cy="30%" r="75%">
+    <stop offset="0%" stop-color="#f5e0ac"/><stop offset="100%" stop-color="#c99a3d"/>
+  </radialGradient>
+  <linearGradient id="gradSaturnRing" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#f5e6bd" stop-opacity="0.15"/>
+    <stop offset="50%" stop-color="#e8c874" stop-opacity="0.95"/>
+    <stop offset="100%" stop-color="#f5e6bd" stop-opacity="0.15"/>
+  </linearGradient>
+  <radialGradient id="gradCometHead" cx="35%" cy="35%" r="70%">
+    <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#bfe3ff"/>
+  </radialGradient>
+  <linearGradient id="gradCometTail" x1="1" y1="0" x2="0" y2="0">
+    <stop offset="0%" stop-color="#bfe3ff" stop-opacity="0.9"/><stop offset="100%" stop-color="#bfe3ff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="gradBalloonPink" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#ffd9df"/><stop offset="100%" stop-color="#f5a8c0"/>
+  </linearGradient>
+  <linearGradient id="gradBalloonBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#dcf0ff"/><stop offset="100%" stop-color="#7fbde8"/>
+  </linearGradient>
+  <linearGradient id="gradBalloonGold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#f5e6bd"/><stop offset="100%" stop-color="#e0b45c"/>
+  </linearGradient>
+  <linearGradient id="gradFlagCloth" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#f5e6bd"/><stop offset="100%" stop-color="#c99a3d"/>
+  </linearGradient>
+
+  <symbol id="icon-rocket" viewBox="0 0 120 200">
+    <path d="M60 8 C82 30 92 56 92 92 L28 92 C28 56 38 30 60 8Z" fill="url(#gradNoseCone)"/>
+    <ellipse cx="60" cy="96" rx="32" ry="66" fill="url(#gradRocketBody)"/>
+    <circle cx="60" cy="86" r="17" fill="url(#gradWindow)" stroke="#fff" stroke-width="3"/>
+    <path d="M30 108 L4 158 L34 142Z" fill="url(#gradFinGold)"/>
+    <path d="M90 108 L116 158 L86 142Z" fill="url(#gradFinGold)"/>
+    <path d="M34 158 Q60 180 86 158 L76 196 Q60 206 44 196Z" fill="url(#gradFlame)"/>
+  </symbol>
+
+  <symbol id="icon-moon" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="url(#gradMoon)"/>
+    <circle cx="34" cy="36" r="9" fill="#c9d2e0" opacity="0.55"/>
+    <circle cx="63" cy="58" r="13" fill="#c9d2e0" opacity="0.4"/>
+    <circle cx="68" cy="28" r="5" fill="#c9d2e0" opacity="0.5"/>
+  </symbol>
+
+  <symbol id="icon-planet-blue" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="url(#gradPlanetBlue)"/>
+    <path d="M18 42 Q40 22 58 36 Q80 46 74 64 Q54 80 34 70 Q14 60 18 42Z" fill="#ffffff" opacity="0.2"/>
+  </symbol>
+
+  <symbol id="icon-planet-orange" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="url(#gradPlanetOrange)"/>
+    <ellipse cx="40" cy="40" rx="20" ry="10" fill="#ffffff" opacity="0.12"/>
+  </symbol>
+
+  <symbol id="icon-saturn" viewBox="0 0 150 100">
+    <ellipse cx="75" cy="50" rx="66" ry="15" fill="url(#gradSaturnRing)"/>
+    <circle cx="75" cy="50" r="34" fill="url(#gradSaturnBody)"/>
+    <ellipse cx="75" cy="50" rx="66" ry="15" fill="none" stroke="#fdf3d8" stroke-width="1.5" opacity="0.5"/>
+  </symbol>
+
+  <symbol id="icon-comet" viewBox="0 0 140 60">
+    <path d="M130 30 Q80 12 8 30 Q80 48 130 30Z" fill="url(#gradCometTail)"/>
+    <circle cx="122" cy="30" r="9" fill="url(#gradCometHead)"/>
+  </symbol>
+
+  <symbol id="icon-cloud" viewBox="0 0 160 90">
+    <path d="M30 70 Q10 70 10 50 Q10 30 32 32 Q36 12 60 14 Q86 8 96 28 Q120 22 128 42 Q150 44 148 64 Q146 78 128 78 L34 78 Q30 78 30 70Z" fill="#ffffff"/>
+  </symbol>
+
+  <symbol id="icon-star" viewBox="0 0 40 40">
+    <path d="M20 2 L24 16 L38 16 L27 25 L31 39 L20 30 L9 39 L13 25 L2 16 L16 16Z" fill="var(--gold)"/>
+  </symbol>
+
+  <symbol id="icon-flag" viewBox="0 0 110 150">
+    <line x1="10" y1="4" x2="10" y2="150" stroke="#c99a3d" stroke-width="5" stroke-linecap="round"/>
+    <path d="M10 10 L96 26 L74 42 L96 58 L10 70Z" fill="url(#gradFlagCloth)"/>
+  </symbol>
+
+  <symbol id="icon-castle" viewBox="0 0 100 100">
+    <rect x="20" y="45" width="60" height="45" fill="#fdf8ec"/>
+    <rect x="13" y="30" width="15" height="20" fill="#fdf8ec"/>
+    <rect x="72" y="30" width="15" height="20" fill="#fdf8ec"/>
+    <rect x="42" y="18" width="16" height="32" fill="#fdf8ec"/>
+    <path d="M13 30 L20.5 18 L28 30Z" fill="var(--gold-deep)"/>
+    <path d="M72 30 L79.5 18 L87 30Z" fill="var(--gold-deep)"/>
+    <path d="M42 18 L50 4 L58 18Z" fill="var(--gold-deep)"/>
+    <rect x="41" y="63" width="18" height="27" rx="2" fill="var(--baby-blue)"/>
+  </symbol>
+
+  <symbol id="icon-calendar" viewBox="0 0 60 60">
+    <rect x="6" y="12" width="48" height="42" rx="6" fill="#fff" stroke="var(--gold-deep)" stroke-width="2"/>
+    <line x1="6" y1="25" x2="54" y2="25" stroke="var(--gold-deep)" stroke-width="2"/>
+    <line x1="19" y1="5" x2="19" y2="17" stroke="var(--gold-deep)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="41" y1="5" x2="41" y2="17" stroke="var(--gold-deep)" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="icon-clock" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="24" fill="#fff" stroke="var(--gold-deep)" stroke-width="2"/>
+    <line x1="30" y1="30" x2="30" y2="15" stroke="var(--navy-mid)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="30" y1="30" x2="40" y2="35" stroke="var(--navy-mid)" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="icon-pin" viewBox="0 0 60 70">
+    <path d="M30 2 C14 2 4 14 4 28 C4 48 30 68 30 68 C30 68 56 48 56 28 C56 14 46 2 30 2Z" fill="var(--gold)"/>
+    <circle cx="30" cy="27" r="10" fill="#fff"/>
+  </symbol>
+
+  <symbol id="icon-book" viewBox="0 0 60 60">
+    <path d="M8 10 Q30 3 30 10 L30 50 Q30 43 8 50Z" fill="var(--baby-blue)"/>
+    <path d="M52 10 Q30 3 30 10 L30 50 Q30 43 52 50Z" fill="var(--gold)"/>
+  </symbol>
+
+  <symbol id="icon-puzzle" viewBox="0 0 60 60">
+    <path d="M8 8 H26 A6 6 0 0 1 26 20 A6 6 0 0 0 26 32 H8Z" fill="var(--gold)"/>
+    <path d="M26 8 H52 V26 A6 6 0 0 1 40 26 A6 6 0 0 0 40 38 V52 H26Z" fill="var(--baby-blue)"/>
+  </symbol>
+
+  <symbol id="icon-clothes" viewBox="0 0 60 60">
+    <path d="M22 6 L22 15 L11 21 L11 35 L19 31 L19 54 L41 54 L41 31 L49 35 L49 21 L38 15 L38 6 Q30 15 22 6Z" fill="var(--gold)"/>
+  </symbol>
+</defs>
+</svg>
+
+<div id="stage-wrap">
+  <div id="phone">
+    <div id="starfield"></div>
+
+    <div id="top-chrome">
+      <div id="nav-dots"></div>
+      <button id="music-toggle" class="no-advance" aria-label="Ligar ou desligar música">🔇</button>
+    </div>
+
+    <main id="app">
+
+      <!-- CENA 1 — ENVELOPE -->
+      <section class="scene active" data-scene="1">
+        <p class="eyebrow" style="color:#fff;opacity:.8;">Missão especial</p>
+        <p class="scene1-title">Você recebeu uma missão muito especial.</p>
+        <div id="envelope" class="no-advance">
+          <div class="env-letter"></div>
+          <div class="env-back"></div>
+          <div class="env-flap"></div>
+          <div class="env-seal">1</div>
+        </div>
+        <button id="open-envelope-btn" class="btn btn-primary no-advance">🚀 Abrir Convite</button>
+      </section>
+
+      <!-- CENA 2 — CARTA DOS PAIS -->
+      <section class="scene" data-scene="2">
+        <div class="letter-card">
+          <h2>Querida tripulação,</h2>
+          <p>Papai Alan e Mamãe Ana convidam você para embarcar nesta aventura espacial para celebrar o primeiro aniversário do Heitor.</p>
+          <p class="letter-signoff">💙 Com carinho, rumo às estrelas.</p>
+        </div>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 3 — CONTAGEM REGRESSIVA -->
+      <section class="scene" data-scene="3" data-autoplay="true">
+        <p class="eyebrow" style="color:#fff;">painel de comando</p>
+        <div id="launch-number">3</div>
+        <div class="mini-rocket-wrap">
+          <svg class="icon" viewBox="0 0 120 200"><use href="#icon-rocket"/></svg>
+          <div class="smoke"></div>
+          <div class="smoke"></div>
+          <div class="smoke"></div>
+        </div>
+      </section>
+
+      <!-- CENA 4 — DECOLAGEM -->
+      <section class="scene" data-scene="4">
+        <div class="liftoff-sky">
+          <div class="liftoff-clouds">
+            <svg class="drift-cloud icon" style="left:-10%; width:180px;" viewBox="0 0 160 90"><use href="#icon-cloud"/></svg>
+            <svg class="drift-cloud icon" style="left:45%; width:150px; animation-delay:-8s;" viewBox="0 0 160 90"><use href="#icon-cloud"/></svg>
+          </div>
+        </div>
+        <svg class="liftoff-rocket icon" viewBox="0 0 120 200"><use href="#icon-rocket"/></svg>
+        <p class="liftoff-text">atravessando as nuvens rumo ao espaço…</p>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 5 — VIAGEM PELO UNIVERSO -->
+      <section class="scene" data-scene="5">
+        <div class="journey-field">
+          <svg class="journey-item icon" style="top:8%; left:8%; width:60px; animation-delay:-1s;" viewBox="0 0 100 100"><use href="#icon-moon"/></svg>
+          <svg class="journey-item icon" style="top:14%; right:10%; width:66px; animation-delay:-3s;" viewBox="0 0 150 100"><use href="#icon-saturn"/></svg>
+          <svg class="journey-item icon" style="bottom:20%; left:10%; width:50px; animation-delay:-2s;" viewBox="0 0 100 100"><use href="#icon-planet-orange"/></svg>
+          <svg class="journey-item icon" style="bottom:12%; right:14%; width:90px; animation-delay:-4s;" viewBox="0 0 140 60"><use href="#icon-comet"/></svg>
+          <svg class="journey-rocket icon" viewBox="0 0 120 200"><use href="#icon-rocket"/></svg>
+        </div>
+        <p class="journey-text">Há um ano, uma estrelinha muito especial iluminou nossas vidas…</p>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 6 — PRIMEIRO ANINHO -->
+      <section class="scene" data-scene="6">
+        <div class="confetti-layer"></div>
+        <div class="balloon-row">
+          <svg class="balloon icon" style="left:15%; animation-delay:-1s;" viewBox="0 0 60 90"><path d="M30 2C46 2 54 18 54 34C54 52 42 66 30 66C18 66 6 52 6 34C6 18 14 2 30 2Z" fill="url(#gradBalloonPink)"/><path d="M30 66L26 74L34 74Z" fill="var(--gold-deep)"/><line x1="30" y1="74" x2="30" y2="90" stroke="var(--gold)" stroke-width="1.5"/></svg>
+          <svg class="balloon icon" style="left:45%; animation-delay:-4s;" viewBox="0 0 60 90"><path d="M30 2C46 2 54 18 54 34C54 52 42 66 30 66C18 66 6 52 6 34C6 18 14 2 30 2Z" fill="url(#gradBalloonBlue)"/><path d="M30 66L26 74L34 74Z" fill="var(--gold-deep)"/><line x1="30" y1="74" x2="30" y2="90" stroke="var(--gold)" stroke-width="1.5"/></svg>
+          <svg class="balloon icon" style="left:70%; animation-delay:-2.5s;" viewBox="0 0 60 90"><path d="M30 2C46 2 54 18 54 34C54 52 42 66 30 66C18 66 6 52 6 34C6 18 14 2 30 2Z" fill="url(#gradBalloonGold)"/><path d="M30 66L26 74L34 74Z" fill="var(--gold-deep)"/><line x1="30" y1="74" x2="30" y2="90" stroke="var(--gold)" stroke-width="1.5"/></svg>
+        </div>
+        <p class="aninho-text">E agora chegou a hora de celebrar seu primeiro aninho! 🎉</p>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 7 — DESTINO -->
+      <section class="scene" data-scene="7">
+        <svg class="destino-planet icon" viewBox="0 0 100 100"><use href="#icon-planet-blue"/></svg>
+        <div class="destino-sign">
+          <p>destino encontrado</p>
+          <h2>🎂 Festa do Heitor 🎂</h2>
+        </div>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 8 — INFORMAÇÕES DA FESTA -->
+      <section class="scene" data-scene="8" style="justify-content:flex-end; padding-bottom:0;">
+        <div class="top-copy">
+          <p class="eyebrow" style="color:var(--gold);">prepare-se para o pouso</p>
+          <h1 style="color:#fff;">Heitor faz 1 ano!</h1>
+        </div>
+        <div class="cloud-card-wrap">
+          <svg class="cloud-divider" viewBox="0 0 400 44" preserveAspectRatio="none">
+            <path d="M0 44 Q20 4 45 26 Q65 44 85 18 Q100 -6 130 22 Q150 46 180 16 Q205 -6 235 20 Q258 46 290 16 Q315 -6 345 20 Q368 42 400 24 L400 44Z" fill="var(--cream)"/>
+          </svg>
+          <div class="cloud-card">
+            <div class="info-grid">
+              <div class="info-item"><svg class="icon"><use href="#icon-calendar"/></svg><span>31 de outubro<br>de 2026</span></div>
+              <div class="info-item"><svg class="icon"><use href="#icon-clock"/></svg><span>às 16h</span></div>
+              <div class="info-item"><svg class="icon"><use href="#icon-castle"/></svg><span>Castelo Kids<br>Lavras/MG</span></div>
+            </div>
+            <a class="btn btn-outline no-advance" style="background:var(--navy-deep); width:100%; justify-content:center;" href="https://maps.app.goo.gl/xL9X2fLnJR9LnmCx7?g_st=iw" target="_blank" rel="noopener">📍 Como chegar</a>
+            <p class="tap-hint" style="position:static; color:var(--gold-deep); margin-top:14px;">toque na tela para continuar ›</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENA 9 — CONTADOR REGRESSIVO DE DIAS -->
+      <section class="scene" data-scene="9">
+        <p class="eyebrow" style="color:#fff;">contagem da missão</p>
+        <div class="days-count" id="countdown-days">--</div>
+        <p class="days-label">dias para a decolagem 🚀</p>
+        <div class="hours-chip"><span id="countdown-hours">--</span>h restantes hoje</div>
+        <p class="days-sub">31/10/2026 às 16h — Castelo Kids</p>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 10 — PRESENTES -->
+      <section class="scene" data-scene="10" style="justify-content:flex-end; padding-bottom:0;">
+        <div class="top-copy"><h1 style="color:#fff; font-size:22px;">🎁 Sugestões de presentes</h1></div>
+        <div class="cloud-card-wrap">
+          <svg class="cloud-divider" viewBox="0 0 400 44" preserveAspectRatio="none">
+            <path d="M0 44 Q20 4 45 26 Q65 44 85 18 Q100 -6 130 22 Q150 46 180 16 Q205 -6 235 20 Q258 46 290 16 Q315 -6 345 20 Q368 42 400 24 L400 44Z" fill="var(--cream)"/>
+          </svg>
+          <div class="cloud-card">
+            <div class="gift-grid">
+              <div class="gift-item"><svg class="icon"><use href="#icon-book"/></svg><span>Livros infantis</span></div>
+              <div class="gift-item"><svg class="icon"><use href="#icon-rocket"/></svg><span>Brinquedos educativos</span></div>
+              <div class="gift-item"><svg class="icon"><use href="#icon-puzzle"/></svg><span>Jogos para a idade</span></div>
+              <div class="gift-item"><svg class="icon"><use href="#icon-clothes"/></svg><span>Roupinhas</span></div>
+            </div>
+            <p class="gift-note">Sua presença já é um presente muito especial. 💙</p>
+            <p class="tap-hint" style="position:static; color:var(--gold-deep); margin-top:12px;">toque na tela para continuar ›</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENA 11 — RSVP -->
+      <section class="scene" data-scene="11">
+        <svg class="icon" style="width:70px; margin-bottom:14px;" viewBox="0 0 40 40"><use href="#icon-star"/></svg>
+        <p class="rsvp-text">Sua presença é muito importante para nossa tripulação.</p>
+        <a class="btn btn-primary no-advance" href="https://forms.gle/cb7H25zZC5Kjuq887" target="_blank" rel="noopener">✅ Confirmar Presença</a>
+        <p class="tap-hint">toque na tela para seguir viagem<span class="arrow">›</span></p>
+      </section>
+
+      <!-- CENA 12 — FINAL -->
+      <section class="scene" data-scene="12">
+        <div class="confetti-layer"></div>
+        <div class="final-planet-wrap">
+          <svg class="icon" style="width:100%; height:100%;" viewBox="0 0 100 100"><use href="#icon-planet-blue"/></svg>
+          <svg class="final-flag icon" viewBox="0 0 110 150">
+            <use href="#icon-flag"/>
+            <text x="30" y="42" font-size="20" fill="var(--navy-deep)">H</text>
+          </svg>
+        </div>
+        <p class="mission-title">🌟 Missão confirmada 🌟</p>
+        <p class="final-msg">Esperamos você nessa aventura espacial.</p>
+        <p class="final-signoff">💙 Heitor</p>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---------- Starfield ----------
+  const starfield = document.getElementById('starfield');
+  const starCount = 70;
+  for(let i=0;i<starCount;i++){
+    const s = document.createElement('div');
+    s.className = 'bg-star' + (Math.random() > 0.85 ? ' big' : '');
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    const size = Math.random()*2 + 1;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.animationDuration = (2 + Math.random()*3) + 's';
+    s.style.animationDelay = (Math.random()*3) + 's';
+    starfield.appendChild(s);
+  }
+
+  // ---------- Nav dots ----------
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const navDotsWrap = document.getElementById('nav-dots');
+  scenes.forEach(()=>{
+    const d = document.createElement('span');
+    d.className = 'dot';
+    navDotsWrap.appendChild(d);
+  });
+  const dots = Array.from(navDotsWrap.children);
+  function updateDots(){
+    dots.forEach((d,i)=>{
+      d.classList.toggle('active', i === current);
+      d.classList.toggle('done', i < current);
+    });
+  }
+
+  // ---------- Audio: music-box "Brilha Brilha Estrelinha" (synth, sem dependências externas) ----------
+  let audioCtx = null;
+  let masterGain = null;
+  let musicOn = false;
+  const musicBtn = document.getElementById('music-toggle');
+
+  const noteFreq = { C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, A4:440.00 };
+  const melody = [
+    ['C4',1],['C4',1],['G4',1],['G4',1],['A4',1],['A4',1],['G4',2],
+    ['F4',1],['F4',1],['E4',1],['E4',1],['D4',1],['D4',1],['C4',2],
+    ['G4',1],['G4',1],['F4',1],['F4',1],['E4',1],['E4',1],['D4',2],
+    ['G4',1],['G4',1],['F4',1],['F4',1],['E4',1],['E4',1],['D4',2],
+    ['C4',1],['C4',1],['G4',1],['G4',1],['A4',1],['A4',1],['G4',2],
+    ['F4',1],['F4',1],['E4',1],['E4',1],['D4',1],['D4',1],['C4',2]
+  ];
+  const quarterSec = 0.44;
+  let noteIndex = 0;
+  let melodyTimer = null;
+
+  function playNote(freq, durSec){
+    if(!audioCtx || !masterGain) return;
+    const t = audioCtx.currentTime;
+    const osc1 = audioCtx.createOscillator(); osc1.type = 'triangle'; osc1.frequency.value = freq;
+    const osc2 = audioCtx.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = freq * 2;
+    const g1 = audioCtx.createGain();
+    g1.gain.setValueAtTime(0.0001, t);
+    g1.gain.exponentialRampToValueAtTime(0.9, t + 0.02);
+    g1.gain.exponentialRampToValueAtTime(0.0001, t + durSec*0.95);
+    const g2 = audioCtx.createGain();
+    g2.gain.setValueAtTime(0.0001, t);
+    g2.gain.exponentialRampToValueAtTime(0.22, t + 0.015);
+    g2.gain.exponentialRampToValueAtTime(0.0001, t + durSec*0.55);
+    osc1.connect(g1); g1.connect(masterGain);
+    osc2.connect(g2); g2.connect(masterGain);
+    osc1.start(t); osc1.stop(t + durSec + 0.05);
+    osc2.start(t); osc2.stop(t + durSec + 0.05);
+  }
+
+  function scheduleNextNote(){
+    const [note, dur] = melody[noteIndex];
+    const durSec = dur * quarterSec;
+    playNote(noteFreq[note], durSec);
+    noteIndex = (noteIndex + 1) % melody.length;
+    melodyTimer = setTimeout(scheduleNextNote, durSec * 1000);
+  }
+
+  function startMusic(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.16;
+      masterGain.connect(audioCtx.destination);
+      scheduleNextNote();
+    } else {
+      audioCtx.resume();
+    }
+    musicOn = true;
+    musicBtn.textContent = '🔊';
+  }
+
+  function toggleMusic(){
+    if(!audioCtx){ startMusic(); return; }
+    musicOn = !musicOn;
+    musicBtn.textContent = musicOn ? '🔊' : '🔇';
+    audioCtx.resume();
+    masterGain.gain.setValueAtTime(musicOn ? 0.16 : 0.0001, audioCtx.currentTime);
+  }
+
+  function fadeMusicOut(){
+    if(!audioCtx || !masterGain) return;
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 4);
+    musicOn = false;
+    musicBtn.textContent = '🔇';
+  }
+
+  musicBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleMusic(); });
+
+  // ---------- Confetti ----------
+  function burstConfetti(container, count){
+    if(!container) return;
+    const colors = ['#e8c874', '#ffffff', '#bfe3ff', '#c99a3d'];
+    for(let i=0;i<count;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random()*100 + '%';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2.2 + Math.random()*1.8) + 's';
+      c.style.animationDelay = (Math.random()*0.6) + 's';
+      container.appendChild(c);
+      setTimeout(()=>{ if(c.parentNode) c.parentNode.removeChild(c); }, 5200);
+    }
+  }
+
+  // ---------- Countdown (days until the party) ----------
+  const targetDate = new Date(2026, 9, 31, 16, 0, 0); // 31 Oct 2026, 16:00
+  let countdownInterval = null;
+  function updateCountdown(){
+    const now = new Date();
+    let diff = targetDate - now;
+    if(diff < 0) diff = 0;
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const daysEl = document.getElementById('countdown-days');
+    const hoursEl = document.getElementById('countdown-hours');
+    if(daysEl) daysEl.textContent = days;
+    if(hoursEl) hoursEl.textContent = hours;
+  }
+
+  // ---------- Scene 3 launch sequence ----------
+  function runLaunchCountdown(){
+    const el = document.getElementById('launch-number');
+    const sceneEl = document.querySelector('.scene[data-scene="3"]');
+    sceneEl.classList.remove('ignite');
+    const seq = ['3','2','1','🚀'];
+    let i = 0;
+    el.textContent = seq[0];
+    el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+    const iv = setInterval(()=>{
+      i++;
+      if(i < seq.length){
+        el.textContent = seq[i];
+        el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+        if(i === seq.length - 1){ sceneEl.classList.add('ignite'); }
+      } else {
+        clearInterval(iv);
+        setTimeout(()=>{ goTo(current + 1); }, 900);
+      }
+    }, 800);
+  }
+
+  // ---------- Scene 12 flag ----------
+  function raiseFlag(){
+    const sceneEl = document.querySelector('.scene[data-scene="12"]');
+    sceneEl.classList.remove('raised');
+    void sceneEl.offsetWidth;
+    setTimeout(()=> sceneEl.classList.add('raised'), 400);
+  }
+
+  // ---------- Scene navigation ----------
+  let current = 0;
+
+  function onSceneLeave(idx){
+    if(idx === 8 && countdownInterval){ clearInterval(countdownInterval); countdownInterval = null; }
+  }
+  function onSceneEnter(idx){
+    if(idx === 2) runLaunchCountdown();
+    if(idx === 5) burstConfetti(scenes[5].querySelector('.confetti-layer'), 34);
+    if(idx === 8){ updateCountdown(); countdownInterval = setInterval(updateCountdown, 1000); }
+    if(idx === 11){
+      raiseFlag();
+      fadeMusicOut();
+      burstConfetti(scenes[11].querySelector('.confetti-layer'), 26);
+    }
+  }
+
+  function goTo(idx){
+    if(idx < 0 || idx >= scenes.length || idx === current && scenes[current].classList.contains('active')) {
+      if(idx < 0 || idx >= scenes.length) return;
+    }
+    const prev = current;
+    scenes[prev].classList.remove('active');
+    current = idx;
+    scenes[current].classList.add('active');
+    onSceneLeave(prev);
+    onSceneEnter(current);
+    updateDots();
+  }
+
+  scenes.forEach((sc, i)=>{
+    sc.addEventListener('click', function(e){
+      if(e.target.closest('.no-advance')) return;
+      if(sc.dataset.autoplay === 'true') return;
+      goTo(current + 1);
+    });
+  });
+
+  document.getElementById('open-envelope-btn').addEventListener('click', function(e){
+    e.stopPropagation();
+    startMusic();
+    document.getElementById('envelope').classList.add('open');
+    setTimeout(()=> goTo(1), 1150);
+  });
+
+  updateDots();
+})();
+</script>
+</body>
+</html>
