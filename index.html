@@ -217,11 +217,12 @@ svg.icon{ display:block; }
 .hours-chip{ display:inline-block; background:rgba(255,255,255,0.1); border:1px solid var(--gold); color:#fff; padding:6px 14px; border-radius:999px; font-size:12.5px; margin-top:10px;}
 
 /* ---- Scene 10: presentes ---- */
-.gift-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:6px 0 16px;}
-.gift-item{ display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(255,255,255,0.5); border-radius:14px; padding:12px 6px;}
+.gift-heart{ color:#fff; font-family:var(--font-display); font-size:17px; max-width:270px; margin:2px 0 10px; line-height:1.4;}
+.gift-subtitle{ color:rgba(255,255,255,0.75); font-size:13.5px; max-width:250px; margin:0 0 6px;}
+.gift-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:300px; margin:14px 0 4px;}
+.gift-item{ display:flex; flex-direction:column; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(232,200,116,0.4); border-radius:16px; padding:16px 8px;}
 .gift-item svg{ width:32px; height:32px;}
-.gift-item span{ font-size:12px; color:var(--navy-mid); font-weight:600;}
-.gift-note{ font-size:13.5px; color:var(--navy-mid); font-style:italic;}
+.gift-item span{ font-size:12px; color:#fff; font-weight:600; text-align:center; line-height:1.3;}
 
 /* ---- Scene 11: rsvp ---- */
 .rsvp-wrap-full{ width:100%; height:100%; display:flex; flex-direction:column; align-items:stretch;}
@@ -538,23 +539,18 @@ svg.icon{ display:block; }
       </section>
 
       <!-- CENA 10 — PRESENTES -->
-      <section class="scene" data-scene="10" style="justify-content:flex-end; padding-bottom:0;">
-        <div class="top-copy"><h1 style="color:#fff; font-size:22px;">🎁 Sugestões de presentes</h1></div>
-        <div class="cloud-card-wrap">
-          <svg class="cloud-divider" viewBox="0 0 400 44" preserveAspectRatio="none">
-            <path d="M0 44 Q20 4 45 26 Q65 44 85 18 Q100 -6 130 22 Q150 46 180 16 Q205 -6 235 20 Q258 46 290 16 Q315 -6 345 20 Q368 42 400 24 L400 44Z" fill="var(--cream)"/>
-          </svg>
-          <div class="cloud-card">
-            <div class="gift-grid">
-              <div class="gift-item"><svg class="icon"><use href="#icon-book"/></svg><span>Livros infantis</span></div>
-              <div class="gift-item"><svg class="icon"><use href="#icon-rocket"/></svg><span>Brinquedos educativos</span></div>
-              <div class="gift-item"><svg class="icon"><use href="#icon-puzzle"/></svg><span>Jogos para a idade</span></div>
-              <div class="gift-item"><svg class="icon"><use href="#icon-clothes"/></svg><span>Roupinhas</span></div>
-            </div>
-            <p class="gift-note">Sua presença já é um presente muito especial. 💙</p>
-            <p class="tap-hint" style="position:static; color:var(--gold-deep); margin-top:12px;">toque na tela para continuar ›</p>
-          </div>
+      <section class="scene" data-scene="10">
+        <p class="eyebrow" style="color:var(--gold);">antes de embarcar</p>
+        <h2 style="color:#fff;">🎁 Sugestões de Presente</h2>
+        <p class="gift-heart">💙 Sua presença já é um presente muito especial.</p>
+        <p class="gift-subtitle">Mas se quiser trazer uma lembrancinha, aqui vão algumas ideias:</p>
+        <div class="gift-grid">
+          <div class="gift-item"><svg class="icon"><use href="#icon-book"/></svg><span>Livros infantis</span></div>
+          <div class="gift-item"><svg class="icon"><use href="#icon-rocket"/></svg><span>Brinquedos educativos</span></div>
+          <div class="gift-item"><svg class="icon"><use href="#icon-puzzle"/></svg><span>Jogos para a idade</span></div>
+          <div class="gift-item"><svg class="icon"><use href="#icon-clothes"/></svg><span>Roupinhas</span></div>
         </div>
+        <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
       </section>
 
       <!-- CENA 11 — RSVP -->
