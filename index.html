@@ -213,8 +213,12 @@ svg.icon{ display:block; }
 /* ---- Scene 9: countdown dias ---- */
 .days-count{ font-family:var(--font-display); font-size:70px; color:var(--gold); text-shadow:0 0 24px rgba(232,200,116,0.5); line-height:1;}
 .days-label{ color:#fff; font-size:14px; margin-top:6px;}
-.days-sub{ color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:16px;}
-.hours-chip{ display:inline-block; background:rgba(255,255,255,0.1); border:1px solid var(--gold); color:#fff; padding:6px 14px; border-radius:999px; font-size:12.5px; margin-top:10px;}
+.hours-chip{ display:inline-block; background:rgba(255,255,255,0.1); border:1px solid var(--gold); color:#fff; padding:6px 14px; border-radius:999px; font-size:12.5px; margin-top:14px;}
+.mission-details{ background:rgba(255,255,255,0.08); border:1.5px solid var(--gold); border-radius:18px; padding:18px 20px; margin-top:20px; display:flex; flex-direction:column; gap:14px; width:100%; max-width:290px;}
+.detail-row{ display:flex; align-items:center; gap:12px; text-align:left;}
+.detail-icon{ font-size:22px; flex-shrink:0; width:26px; text-align:center;}
+.detail-text{ color:#fff; font-size:16.5px; font-weight:700; line-height:1.35;}
+.detail-sub{ color:var(--gold); font-size:12.5px; font-weight:600; margin-top:2px;}
 
 /* ---- Scene 10: presentes ---- */
 .gift-heart{ color:#fff; font-family:var(--font-display); font-size:17px; max-width:270px; margin:2px 0 10px; line-height:1.4;}
@@ -513,7 +517,7 @@ svg.icon{ display:block; }
           <div class="cloud-card">
             <div class="info-grid-2">
               <div class="info-item"><svg class="icon"><use href="#icon-calendar"/></svg><span>31 de outubro<br>de 2026</span></div>
-              <div class="info-item"><svg class="icon"><use href="#icon-clock"/></svg><span>às 16h</span></div>
+              <div class="info-item"><svg class="icon"><use href="#icon-clock"/></svg><span>16h às 20h<br>(4h de festa)</span></div>
             </div>
             <div class="address-banner">
               <svg class="icon"><use href="#icon-pin"/></svg>
@@ -533,8 +537,21 @@ svg.icon{ display:block; }
         <p class="eyebrow" style="color:#fff;">contagem da missão</p>
         <div class="days-count" id="countdown-days">--</div>
         <p class="days-label">dias para a decolagem 🚀</p>
+        <div class="mission-details">
+          <div class="detail-row">
+            <span class="detail-icon">📅</span>
+            <span class="detail-text">31 de outubro de 2026</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-icon">🕐</span>
+            <div class="detail-text">16h às 20h<div class="detail-sub">duração de 4 horas</div></div>
+          </div>
+          <div class="detail-row">
+            <span class="detail-icon">📍</span>
+            <span class="detail-text">Castelo Kids — Lavras/MG</span>
+          </div>
+        </div>
         <div class="hours-chip"><span id="countdown-hours">--</span>h restantes hoje</div>
-        <p class="days-sub">31/10/2026 às 16h — Castelo Kids</p>
         <p class="tap-hint">toque para continuar<span class="arrow">›</span></p>
       </section>
 
